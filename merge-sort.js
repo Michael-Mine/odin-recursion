@@ -1,39 +1,26 @@
-function mergeSort(arr) {
-  console.log("This was printed recursively");
-  if (arr.length === 1) return arr;
-  else {
-    //split array in half
-    let halfLength = Math.floor(arr.length / 2);
-    console.log("halfLength is " + halfLength);
-    let arrLeft = arr.slice(0, halfLength);
-    // if (arrLeft.length > 1) mergeSort(arrLeft);
-    console.log("Left array is " + arrLeft);
+function mergeSort(array) {
+  if (array.length <= 1) return array;
 
-    let arrRight = arr.slice(halfLength);
-    // if (arrRight.length > 1) mergeSort(arrRight);
-    console.log("Right array is " + arrRight);
-    //sort left half of numbers
-    //sort right half of numbers
-    //merge sorted halves
-    let merged = [];
+  const mid = Math.floor(array.length / 2);
+  const left = mergeSort(array.slice(0, mid));
+  const right = mergeSort(array.slice(mid));
 
-    // while (Number.isInteger(arrLeft[0]) || Number.isInteger(arrRight[0])) {
-    if (arrLeft[0] < arrRight[0]) {
-      merged.push(arrLeft[0]);
-      merged.push(arrRight[0]);
-      // arrLeft.splice(0, 1);
-      console.log("left");
-    } else {
-      merged.push(arrRight[0]);
-      merged.push(arrLeft[0]);
-      // arrRight.splice(0, 1);
-      console.log("right");
-    }
-    // }
-
-    console.log("Merged array is " + merged);
-    return merged;
-  }
+  return merge(left, right);
 }
 
-console.log(mergeSort([105, 79]));
+function merge(left, right) {
+  const result = [];
+
+  while (left.length && right.length) {
+    if (left[0] < right[0]) {
+      result.push(left.shift());
+    } else {
+      result.push(right.shift());
+    }
+  }
+
+  return [...result, ...left, ...right];
+}
+
+console.log(mergeSort([105, 79, 100, 110]));
+console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]));
